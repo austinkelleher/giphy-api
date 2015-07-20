@@ -1,0 +1,31 @@
+{
+  "name": "giphy-api",
+  "version": "1.0.0",
+  "description": "Node.js Giphy API",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --ui bdd --reporter spec ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/austinkelleher/giphy-api"
+  },
+  "keywords": [
+    "giphy",
+    "gif",
+    "api"
+  ],
+  "author": "Austin Kelleher, a@alk.im",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/austinkelleher/giphy-api/issues"
+  },
+  "homepage": "https://github.com/austinkelleher/giphy-api",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
+  }
+}
