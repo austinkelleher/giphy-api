@@ -14,9 +14,9 @@ describe('Giphy API', function() {
         it('should allow user to search by phrase without space', function(done) {
             giphy.search({
                 q: 'funny'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -24,9 +24,9 @@ describe('Giphy API', function() {
         it('should allow user to search with phrase with space', function(done) {
             giphy.search({
                 q: 'funny cat'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -38,9 +38,9 @@ describe('Giphy API', function() {
                 offset: 2,
                 rating: 'g',
                 fmt: 'json'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data.length).to.equal(5);
+                expect(res.data.length).to.equal(5);
                 done();
             });
         });
@@ -52,30 +52,30 @@ describe('Giphy API', function() {
                 offset: 2,
                 rating: 'g',
                 fmt: 'html'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data).to.exist;
+                expect(res).to.exist;
                 done();
             });
         });
 
         it('should be able to search by string', function(done) {
-            giphy.search('funny cat', function(err, data) {
+            giphy.search('funny cat', function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
 
         it('should receive error with empty string option', function(done) {
-            giphy.search('', function(err, data) {
+            giphy.search('', function(err, res) {
                 expect(err).to.exist;
                 done();
             });
         });
 
         it('should receive error with empty object option', function(done) {
-            giphy.search({}, function(err, data) {
+            giphy.search({}, function(err, res) {
                 expect(err).to.exist;
                 done();
             });
@@ -85,9 +85,9 @@ describe('Giphy API', function() {
     describe('Giphy Id Search', function() {
 
         it('should allow user to search by id', function(done) {
-            giphy.id('feqkVgjJpYtjy', function(err, data) {
+            giphy.id('feqkVgjJpYtjy', function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -96,22 +96,22 @@ describe('Giphy API', function() {
             giphy.id([
                 'feqkVgjJpYtjy',
                 '7rzbxdu0ZEXLy'
-            ], function(err, data) {
+            ], function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
 
         it('should throw error if Id string empty', function(done) {
-            giphy.id('', function(err, data) {
+            giphy.id('', function(err, res) {
                 expect(err).to.exist;
                 done();
             });
         });
 
         it('should throw error if Id array empty', function(done) {
-            giphy.id([], function(err, data) {
+            giphy.id([], function(err, res) {
                 expect(err).to.exist;
                 done();
             });
@@ -121,9 +121,9 @@ describe('Giphy API', function() {
     describe('Giphy Translate', function() {
 
         it('should allow user to translate by phrase as string', function(done) {
-            giphy.translate('superman', function(err, data) {
+            giphy.translate('superman', function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -131,9 +131,9 @@ describe('Giphy API', function() {
         it('should allow user to translate by phrase as object', function(done) {
             giphy.translate({
                 s: 'superman'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -141,9 +141,9 @@ describe('Giphy API', function() {
         it('should allow user to translate with phrase with space', function(done) {
             giphy.translate({
                 s: 'funny superman'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -153,9 +153,9 @@ describe('Giphy API', function() {
                 s: 'superman',
                 rating: 'g',
                 fmt: 'json'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -164,17 +164,17 @@ describe('Giphy API', function() {
     describe('Giphy Random', function() {
 
         it('should allow user to receive a random gif by string without space', function(done) {
-            giphy.random('superman', function(err, data) {
+            giphy.random('superman', function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
 
         it('should allow user to receive a random gif by string with space', function(done) {
-            giphy.random('funny superman', function(err, data) {
+            giphy.random('funny superman', function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -182,9 +182,9 @@ describe('Giphy API', function() {
         it('should allow user to receive a random gif with tag property', function(done) {
             giphy.random({
                 tag: 'superman'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -194,9 +194,9 @@ describe('Giphy API', function() {
                 tag: 'superman',
                 rating: 'g',
                 fmt: 'json'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -205,17 +205,17 @@ describe('Giphy API', function() {
     describe('Giphy Trending', function() {
 
         it('should allow user to receive trending gifs without options', function(done) {
-            giphy.trending(function(err, data) {
+            giphy.trending(function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
 
         it('should allow empty options object to be passed', function(done) {
-            giphy.trending({}, function(err, data) {
+            giphy.trending({}, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -225,9 +225,9 @@ describe('Giphy API', function() {
                 limit: 2,
                 rating: 'g',
                 fmt: 'json'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data.length).to.equal(2);
+                expect(res.data.length).to.equal(2);
                 done();
             });
         });
@@ -247,9 +247,9 @@ describe('Giphy API', function() {
             giphy.search({
                 api: 'stickers',
                 q: 'funny'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -258,9 +258,9 @@ describe('Giphy API', function() {
             giphy.translate({
                 api: 'stickers',
                 s: 'superman'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -269,9 +269,9 @@ describe('Giphy API', function() {
             giphy.random({
                 api: 'stickers',
                 tag: 'superman'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });
@@ -279,9 +279,9 @@ describe('Giphy API', function() {
         it('should allow user to receive trending stickers', function(done) {
             giphy.trending({
                 api: 'stickers'
-            }, function(err, data) {
+            }, function(err, res) {
                 expect(err).to.equal(null);
-                expect(data.data).to.not.be.empty;
+                expect(res.data).to.not.be.empty;
                 done();
             });
         });

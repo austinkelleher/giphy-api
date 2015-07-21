@@ -115,7 +115,7 @@ Trending gifs on [The Hot 100](http://giphy.com/hot100) list
 
 ```javascript
 // Trending Hot 100 gifs
-giphy.trending(function(err, data) {
+giphy.trending(function(err, res) {
 
 });
 ```
@@ -125,7 +125,7 @@ giphy.trending({
     limit: 2,
     rating: 'g',
     fmt: 'json'
-}, function(err, data) {
+}, function(err, res) {
 
 });
 ```
@@ -139,7 +139,7 @@ property to a giphy-api function.
 giphy.search({
     api: 'stickers',
     q: 'funny'
-}, function(err, data) {
+}, function(err, res) {
 
 });
 ```
