@@ -1,5 +1,8 @@
 giphy-api
 ===========
+[![Build Status](https://travis-ci.org/austinkelleher/giphy-api.svg)](https://travis-ci.org/austinkelleher/giphy-api)
+![NPM version](https://badge.fury.io/js/giphy-api.svg)
+
 Simple to use Node.js module for the [giphy.com](http://giphy.com) API. All
 search parameters and endpoints can be found on the [Giphy API documentation](https://github.com/giphy/GiphyAPI).
 
