@@ -171,6 +171,24 @@ describe('Giphy API', function() {
             });
         });
 
+        it('should allow user to receive a random gif without a query', function(done) {
+            giphy.random(function(err, res) {
+                expect(err).to.equal(null);
+                expect(res.data).to.not.be.empty;
+                done();
+            });
+        });
+
+        it('should allow user to receive a random gif with a query that does not include tag', function(done) {
+            giphy.random({
+                rating: 'g'
+            }, function(err, res) {
+                expect(err).to.equal(null);
+                expect(res.data).to.not.be.empty;
+                done();
+            });
+        });
+
         it('should allow user to receive a random gif by string with space', function(done) {
             giphy.random('funny superman', function(err, res) {
                 expect(err).to.equal(null);

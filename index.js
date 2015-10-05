@@ -102,17 +102,22 @@ GiphyAPI.prototype = {
     *   fmt - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
     */
     random: function(options, callback) {
-        if (!options) {
-            return callback('Random endpoint options cannot be empty.');
+        var reqOptions = {
+            api: options.api || 'gifs',
+            endpoint: 'random'
+        };
+
+        if (typeof(options) === 'string') {
+            reqOptions.query = {
+                tag: options
+            };
+        } else if (typeof(options) === 'object') {
+            reqOptions.query = options;
+        } else if (typeof(options) === 'function') {
+            callback = options;
         }
 
-        this._request({
-            api: options.api || 'gifs',
-            endpoint: 'random',
-            query: typeof(options) === 'string' ? {
-                tag: options
-            } : options
-        }, callback);
+        this._request(reqOptions, callback);
     },
 
     /**
