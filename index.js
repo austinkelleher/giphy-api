@@ -2,14 +2,22 @@ var http = require('http');
 var queryString = require('querystring');
 
 /**
-* Base URL of the Giphy API
+* Hostname of the Giphy API
 */
-var API_BASE_URL = 'http://api.giphy.com/v1/';
+var API_HOSTNAME = 'api.giphy.com';
+/**
+* Base PATH of the Giphy API
+*/
+var API_BASE_PATH = '/v1/';
 /**
 * Public API key provided by Giphy for anyone to use. This is used as a fallback
 * if no API key is provided
 */
 var PUBLIC_BETA_API_KEY = 'dc6zaTOxFJmzC';
+/**
+* Define if the environment is a browser
+*/
+var ENV_IS_BROWSER = process.browser || false;
 
 /**
 * @param apiKey Giphy API key. Defaults to the public beta API key
@@ -187,8 +195,14 @@ GiphyAPI.prototype = {
                 api_key: self.apiKey
             });
         }
+        
+        var requestOptions = {
+            hostname: API_HOSTNAME,
+            path: API_BASE_PATH + options.api + endpoint + query,
+            withCredentials: !ENV_IS_BROWSER
+        };
 
-        http.get(API_BASE_URL + options.api + endpoint + query, function(response) {
+        http.get(requestOptions, function(response) {
             var body = '';
             response.on('data', function(d) {
                 body += d;
