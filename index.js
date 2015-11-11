@@ -1,3 +1,5 @@
+/* global process */
+
 var http = require('http');
 var queryString = require('querystring');
 
@@ -40,10 +42,14 @@ GiphyAPI.prototype = {
     */
     search: function(options, callback) {
         if (!options) {
-            return callback('Search phrase cannot be empty.');
+            if (callback) {
+                return callback('Search phrase cannot be empty.');
+            } else {
+                return Promise.reject('Search phrase cannot be empty.');
+            }
         }
 
-        this._request({
+        return this._request({
             api: options.api || 'gifs',
             endpoint: 'search',
             query: typeof(options) === 'string' ? {
@@ -62,7 +68,11 @@ GiphyAPI.prototype = {
         var idIsArr = Array.isArray(id);
 
         if (!id || (idIsArr && id.length === 0)) {
-            return callback('Id required for id API call');
+            if (callback) {
+                return callback('Id required for id API call');
+            } else {
+                return Promise.reject('Id required for id API call');
+            }
         }
 
         // If an array of Id's was passed, generate a comma delimited string for
@@ -71,7 +81,7 @@ GiphyAPI.prototype = {
             id = id.join();
         }
 
-        this._request({
+        return this._request({
             api: 'gifs',
             query: {
                 ids: id
@@ -89,10 +99,14 @@ GiphyAPI.prototype = {
     */
     translate: function(options, callback) {
         if (!options) {
-            return callback('Translate phrase cannot be empty.');
+            if (callback) {
+                return callback('Translate phrase cannot be empty.');
+            } else {
+                return new Promise.reject('Translate phrase cannot be empty.');
+            }
         }
 
-        this._request({
+        return this._request({
             api: options.api || 'gifs',
             endpoint: 'translate',
             query: typeof(options) === 'string' ? {
@@ -111,7 +125,7 @@ GiphyAPI.prototype = {
     */
     random: function(options, callback) {
         var reqOptions = {
-            api: options.api || 'gifs',
+            api: (options ? options.api : null) || 'gifs',
             endpoint: 'random'
         };
 
@@ -125,7 +139,7 @@ GiphyAPI.prototype = {
             callback = options;
         }
 
-        this._request(reqOptions, callback);
+        return this._request(reqOptions, callback);
     },
 
     /**
@@ -141,24 +155,21 @@ GiphyAPI.prototype = {
             endpoint: 'trending'
         };
 
-        reqOptions.api = options.api || 'gifs';
-        //Cleanup so we don't add this to our query
-        delete options.api;
+        reqOptions.api = (options ? options.api : null) || 'gifs';
 
-        if (arguments.length === 1) {
-            if (typeof(options) !== 'function') {
-                throw new Error('Callback must be provided to trending');
-            }
-            callback = options;
-        // Ensure that options were passed, and if they were, ensure that it is
-        // not an empty object before setting the query.
-        } else if (arguments.length === 2 &&
-            typeof(options) === 'object' &&
-            Object.keys(options).length !== 0) {
-            reqOptions.query = options;
+        //Cleanup so we don't add this to our query
+        if (options) {
+            delete options.api;
         }
 
-        this._request(reqOptions, callback);
+        if (typeof options === 'object' &&
+            Object.keys(options).length !== 0) {
+            reqOptions.query = options;
+        } else if (typeof options === 'function') {
+            callback = options;
+        }
+
+        return this._request(reqOptions, callback);
     },
 
     /**
@@ -184,7 +195,10 @@ GiphyAPI.prototype = {
         if (typeof(options.query) !== 'undefined') {
             if (typeof(options.query) === 'object') {
                 if (Object.keys(options.query).length === 0) {
-                    return callback('Options object should not be empty');
+                    if (callback) {
+                        return callback('Options object should not be empty');
+                    }
+                    return Promise.reject('Options object should not be empty');
                 }
 
                 options.query.api_key = this.apiKey;
@@ -195,27 +209,46 @@ GiphyAPI.prototype = {
                 api_key: self.apiKey
             });
         }
-        
+
         var requestOptions = {
             hostname: API_HOSTNAME,
             path: API_BASE_PATH + options.api + endpoint + query,
             withCredentials: !ENV_IS_BROWSER
         };
 
-        http.get(requestOptions, function(response) {
-            var body = '';
-            response.on('data', function(d) {
-                body += d;
+        var makeRequest = function(resolve, reject) {
+            http.get(requestOptions, function(response) {
+                var body = '';
+                response.on('data', function(d) {
+                    body += d;
+                });
+                response.on('end', function() {
+                    if (!options.query || options.query.fmt !== 'html') {
+                        body = JSON.parse(body);
+                    }
+                    resolve(body);
+                });
+            }).on('error', function(err) {
+                reject(err);
             });
-            response.on('end', function() {
-                if (!options.query || options.query.fmt !== 'html') {
-                    body = JSON.parse(body);
-                }
-                callback(null, body);
+        };
+
+        if (callback) {
+            var resolve = function(res) {
+                callback(null, res);
+            };
+            var reject = function(err) {
+                callback(err);
+            };
+            makeRequest(resolve, reject);
+        } else {
+            if (typeof Promise === 'undefined') {
+                throw new Error('Callback must be provided unless Promises are available');
+            }
+            return new Promise(function(resolve, reject) {
+                makeRequest(resolve, reject);
             });
-        }).on('error', function(err) {
-            callback(err);
-        });
+        }
     }
 };
 
