@@ -3,8 +3,9 @@ giphy-api
 [![Build Status](https://travis-ci.org/austinkelleher/giphy-api.svg)](https://travis-ci.org/austinkelleher/giphy-api)
 ![NPM version](https://badge.fury.io/js/giphy-api.svg)
 
-Simple to use Node.js module for the [giphy.com](http://giphy.com) API. All
-search parameters and endpoints can be found on the [Giphy API documentation](https://github.com/giphy/GiphyAPI).
+Simple to use Node.js module for the [giphy.com](http://giphy.com) API that
+supports **promises and callbacks**. All search parameters and endpoints can be
+found on the [Giphy API documentation](https://github.com/giphy/GiphyAPI).
 
 ![Giphy logo](http://giphy.com/static/img/giphy_logo_square_social.png)
 
@@ -30,13 +31,18 @@ Search all Giphy GIFs for a word or phrase. Supported parameters:
 - fmt - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
 
 ```javascript
-// Search with a plain string
+// Search with a plain string using callback
 giphy.search('pokemon', function(err, res) {
+    // Res contains gif data!
+});
+
+// Search with options using promise
+giphy.search('pokemon').then(function(res)) {
     // Res contains gif data!
 });
 ```
 ```javascript
-// Search with options
+// Search with options using callback
 giphy.search({
     q: 'pokemon',
     rating: 'g'
@@ -49,8 +55,13 @@ giphy.search({
 Search all Giphy gifs for a single Id or an array of Id's
 
 ```javascript
-//Search with a single Id
+//Search with a single Id using callback
 giphy.id('feqkVgjJpYtjy', function(err, res) {
+
+});
+
+//Search with a single Id using promise
+giphy.id('feqkVgjJpYtjy').then(function(res)) {
 
 });
 ```
@@ -71,8 +82,13 @@ Experimental search endpoint for gif dialects. Supported parameters:
 - fmt - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
 
 ```javascript
-// Translate search with a plain string
+// Translate search with a plain string using callback
 giphy.translate('superman', function(err, res) {
+
+});
+
+// Translate search with a plain string using promise
+giphy.translate('superman').then(function(res)) {
 
 });
 ```
@@ -94,8 +110,13 @@ Random gif(s) filtered by tag. Supported parameters:
 - fmt - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
 
 ```javascript
-// Random gif by tag
+// Random gif by tag using callback
 giphy.random('superman', function(err, res) {
+
+});
+
+// Random gif by tag using promise
+giphy.random('superman').then(function(res)) {
 
 });
 ```
@@ -117,8 +138,13 @@ Trending gifs on [The Hot 100](http://giphy.com/hot100) list
 - fmt - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
 
 ```javascript
-// Trending Hot 100 gifs
+// Trending Hot 100 gifs using callback
 giphy.trending(function(err, res) {
+
+});
+
+// Trending Hot 100 gifs using promise
+giphy.trending().then(function(res)) {
 
 });
 ```
@@ -139,10 +165,19 @@ support stickers **except id**, which is not a supported Giphy sticker endpoint.
 In order to use the sticker API instead of the gif API, simply pass the ```api```
 property to a giphy-api function.
 ```javascript
+// Sticker search using callback
 giphy.search({
     api: 'stickers',
     q: 'funny'
 }, function(err, res) {
+
+});
+
+// Sticker search using promise
+giphy.search({
+    api: 'stickers',
+    q: 'funny'
+}).then(res) {
 
 });
 ```
