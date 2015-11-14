@@ -397,7 +397,7 @@ describe('Giphy API', function() {
         describe('Giphy Translate', function() {
 
             it('should allow user to translate by phrase as string', function() {
-              return  giphy.translate('superman').then(function(res) {
+                return giphy.translate('superman').then(function(res) {
                     expect(res.data).to.not.be.empty;
                 });
             });
