@@ -37,7 +37,7 @@ giphy.search('pokemon', function(err, res) {
 });
 
 // Search with options using promise
-giphy.search('pokemon').then(function(res)) {
+giphy.search('pokemon').then(function(res) {
     // Res contains gif data!
 });
 ```
@@ -61,7 +61,7 @@ giphy.id('feqkVgjJpYtjy', function(err, res) {
 });
 
 //Search with a single Id using promise
-giphy.id('feqkVgjJpYtjy').then(function(res)) {
+giphy.id('feqkVgjJpYtjy').then(function(res) {
 
 });
 ```
@@ -88,7 +88,7 @@ giphy.translate('superman', function(err, res) {
 });
 
 // Translate search with a plain string using promise
-giphy.translate('superman').then(function(res)) {
+giphy.translate('superman').then(function(res) {
 
 });
 ```
@@ -116,7 +116,7 @@ giphy.random('superman', function(err, res) {
 });
 
 // Random gif by tag using promise
-giphy.random('superman').then(function(res)) {
+giphy.random('superman').then(function(res) {
 
 });
 ```
@@ -144,7 +144,7 @@ giphy.trending(function(err, res) {
 });
 
 // Trending Hot 100 gifs using promise
-giphy.trending().then(function(res)) {
+giphy.trending().then(function(res) {
 
 });
 ```
