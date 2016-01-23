@@ -24,11 +24,17 @@ var ENV_IS_BROWSER = process.browser || false;
 /**
 * @param apiKey Giphy API key. Defaults to the public beta API key
 */
-var GiphyAPI = function(apiKey, options) {
-    options = options || {};
-    
-    this.apiKey = apiKey || PUBLIC_BETA_API_KEY;
-    this.timeout = options && options.timeout || 30000;
+var GiphyAPI = function(options) {
+    if (typeof options === 'string' || typeof options === 'undefined') {
+        this.apiKey = options || PUBLIC_BETA_API_KEY;
+        options = {};
+    } else if (typeof options === 'object') {
+        this.apiKey = options.apiKey || PUBLIC_BETA_API_KEY;
+    } else {
+        throw new Error ('Invalid options passed to giphy-api');
+    }
+
+    this.timeout = options.timeout || 30000;
 };
 
 GiphyAPI.prototype = {
@@ -236,7 +242,7 @@ GiphyAPI.prototype = {
             });
 
             req.on('socket', function (socket) {
-                socket.setTimeout(self.timeout);  
+                socket.setTimeout(self.timeout);
                 socket.on('timeout', function() {
                     req.abort();
                 });
