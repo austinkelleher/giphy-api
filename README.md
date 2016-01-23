@@ -20,6 +20,9 @@ npm install giphy-api --save
 var giphy = require('giphy-api')('API KEY HERE');
 // Require with the public beta key
 var giphy = require('giphy-api')();
+
+// Require with specific timeout
+var giphy = require('giphy-api')(null, { timeout: 10000 });
 ```
 
 ## [Phrase search](https://github.com/giphy/GiphyAPI#search-endpoint)
