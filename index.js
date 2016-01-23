@@ -24,8 +24,11 @@ var ENV_IS_BROWSER = process.browser || false;
 /**
 * @param apiKey Giphy API key. Defaults to the public beta API key
 */
-var GiphyAPI = function(apiKey) {
+var GiphyAPI = function(apiKey, options) {
+    options = options || {};
+    
     this.apiKey = apiKey || PUBLIC_BETA_API_KEY;
+    this.timeout = options && options.timeout || 30000;
 };
 
 GiphyAPI.prototype = {
@@ -217,7 +220,7 @@ GiphyAPI.prototype = {
         };
 
         var makeRequest = function(resolve, reject) {
-            http.get(requestOptions, function(response) {
+            var req = http.get(requestOptions, function(response) {
                 var body = '';
                 response.on('data', function(d) {
                     body += d;
@@ -230,6 +233,13 @@ GiphyAPI.prototype = {
                 });
             }).on('error', function(err) {
                 reject(err);
+            });
+
+            req.on('socket', function (socket) {
+                socket.setTimeout(self.timeout);  
+                socket.on('timeout', function() {
+                    req.abort();
+                });
             });
         };
 
@@ -252,6 +262,6 @@ GiphyAPI.prototype = {
     }
 };
 
-module.exports = function(apiKey) {
-    return new GiphyAPI(apiKey);
+module.exports = function(apiKey, options) {
+    return new GiphyAPI(apiKey, options);
 };
