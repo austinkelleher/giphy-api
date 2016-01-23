@@ -22,7 +22,10 @@ var PUBLIC_BETA_API_KEY = 'dc6zaTOxFJmzC';
 var ENV_IS_BROWSER = process.browser || false;
 
 /**
-* @param apiKey Giphy API key. Defaults to the public beta API key
+* @param options {string|object} - Options object. If this is a string, it is
+*   considered the api key
+*   options.apiKey - Giphy API key. Defaults to the public beta API key
+*   options.timeout - Request timeout before returning an error. Defaults to 30000 milliseconds
 */
 var GiphyAPI = function(options) {
     if (typeof options === 'string' ||
