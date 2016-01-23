@@ -552,6 +552,17 @@ describe('Giphy API', function() {
             });
         });
 
+        it('should allow initializing with null argument', function(done) {
+            var giphy = new Giphy(null);
+            giphy.search({
+                q: 'funny'
+            }, function(err, res) {
+                expect(err).to.equal(null);
+                expect(res.data).to.not.be.empty;
+                done();
+            });
+        });
+
         it('should allow initializing with api key string', function(done) {
             // Use the public beta API key
             var giphy = new Giphy('dc6zaTOxFJmzC');

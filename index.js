@@ -25,7 +25,9 @@ var ENV_IS_BROWSER = process.browser || false;
 * @param apiKey Giphy API key. Defaults to the public beta API key
 */
 var GiphyAPI = function(options) {
-    if (typeof options === 'string' || typeof options === 'undefined') {
+    if (typeof options === 'string' ||
+        typeof options === 'undefined' ||
+        options === null) {
         this.apiKey = options || PUBLIC_BETA_API_KEY;
         options = {};
     } else if (typeof options === 'object') {
