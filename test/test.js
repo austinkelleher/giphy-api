@@ -3,13 +3,14 @@
 * Using .exist as a property instead of a function makes jshint unhappy!
 */
 /*jshint -W030 */
-var giphy = require('../')();
+var Giphy = require('../');
 var chai = require('chai');
 chai.config.includeStack = true;
 require('chai').should();
 var expect = require('chai').expect;
 
 describe('Giphy API', function() {
+    var giphy = Giphy();
 
     describe('The callback based api', function() {
         describe('Giphy Phrase Search', function() {
@@ -114,6 +115,14 @@ describe('Giphy API', function() {
 
             it('should throw error if Id array empty', function(done) {
                 giphy.id([], function(err, res) {
+                    expect(err).to.exist;
+                    done();
+                });
+            });
+            
+            it('should throw error if socket timeout', function(done) {
+                var giphyTimeout = new Giphy(null, { timeout: 1 });
+                giphyTimeout.id('feqkVgjJpYtjy', function(err, res) {
                     expect(err).to.exist;
                     done();
                 });
