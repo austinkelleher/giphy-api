@@ -10,7 +10,7 @@ require('chai').should();
 var expect = require('chai').expect;
 
 describe('Giphy API', function() {
-    var giphy = Giphy();
+    var giphy = new Giphy();
 
     describe('The callback based api', function() {
         describe('Giphy Phrase Search', function() {
@@ -115,14 +115,6 @@ describe('Giphy API', function() {
 
             it('should throw error if Id array empty', function(done) {
                 giphy.id([], function(err, res) {
-                    expect(err).to.exist;
-                    done();
-                });
-            });
-            
-            it('should throw error if socket timeout', function(done) {
-                var giphyTimeout = new Giphy(null, { timeout: 1 });
-                giphyTimeout.id('feqkVgjJpYtjy', function(err, res) {
                     expect(err).to.exist;
                     done();
                 });
@@ -544,6 +536,94 @@ describe('Giphy API', function() {
                 }).then(function(res) {
                     expect(res.data).to.not.be.empty;
                 });
+            });
+        });
+    });
+
+    describe('Initialization', function() {
+        it('should allow initializing with no arguments', function(done) {
+            var giphy = new Giphy();
+            giphy.search({
+                q: 'funny'
+            }, function(err, res) {
+                expect(err).to.equal(null);
+                expect(res.data).to.not.be.empty;
+                done();
+            });
+        });
+
+        it('should allow initializing with null argument', function(done) {
+            var giphy = new Giphy(null);
+            giphy.search({
+                q: 'funny'
+            }, function(err, res) {
+                expect(err).to.equal(null);
+                expect(res.data).to.not.be.empty;
+                done();
+            });
+        });
+
+        it('should allow initializing with api key string', function(done) {
+            // Use the public beta API key
+            var giphy = new Giphy('dc6zaTOxFJmzC');
+            giphy.search({
+                q: 'funny'
+            }, function(err, res) {
+                expect(err).to.equal(null);
+                expect(res.data).to.not.be.empty;
+                done();
+            });
+        });
+
+        it('should allow initializing with arguments with api key', function(done) {
+            // Use the public beta API key
+            var giphy = new Giphy({
+                apiKey: 'dc6zaTOxFJmzC'
+            });
+
+            giphy.search({
+                q: 'funny'
+            }, function(err, res) {
+                expect(err).to.equal(null);
+                expect(res.data).to.not.be.empty;
+                done();
+            });
+        });
+
+        it('should allow initializing with no api key', function(done) {
+            var giphy = new Giphy({
+                timeout: 5000
+            });
+
+            giphy.search({
+                q: 'funny'
+            }, function(err, res) {
+                expect(err).to.equal(null);
+                expect(res.data).to.not.be.empty;
+                done();
+            });
+        });
+
+        it('should allow initializing with empty object', function(done) {
+            var giphy = new Giphy({});
+
+            giphy.search({
+                q: 'funny'
+            }, function(err, res) {
+                expect(err).to.equal(null);
+                expect(res.data).to.not.be.empty;
+                done();
+            });
+        });
+
+        it('should receive error if socket timeout', function(done) {
+            var giphy = new Giphy({
+                timeout: 1
+            });
+
+            giphy.id('feqkVgjJpYtjy', function(err, res) {
+                expect(err).to.exist;
+                done();
             });
         });
     });
