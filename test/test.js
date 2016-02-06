@@ -9,6 +9,8 @@ chai.config.includeStack = true;
 require('chai').should();
 var expect = require('chai').expect;
 
+var promisesExist = typeof Promise !== 'undefined';
+
 describe('Giphy API', function() {
     var giphy = new Giphy();
 
@@ -300,8 +302,72 @@ describe('Giphy API', function() {
         });
     });
 
+    describe('Unsupported promise engine errors', function() {
+        if (promisesExist) {
+            return;
+        }
+
+        describe('Giphy Phrase Search', function() {
+            it('should throw error if no options passed', function() {
+                var test = function() {
+                    giphy.search();
+                };
+
+                expect(test).to.throw(Error);
+            });
+
+            it('should throw error if options passed without callback', function() {
+                var test = function() {
+                    giphy.search({
+                        q: 'funny'
+                    });
+                };
+
+                expect(test).to.throw(Error);
+            });
+        });
+
+        describe('Giphy Id Search', function() {
+            it('should throw error if no options passed', function() {
+                var test = function() {
+                    giphy.id();
+                };
+
+                expect(test).to.throw(Error);
+            });
+
+            it('should throw error if options passed without callback', function() {
+                var test = function() {
+                    giphy.id('feqkVgjJpYtjy');
+                };
+
+                expect(test).to.throw(Error);
+            });
+        });
+
+        describe('Giphy Translate', function() {
+            it('should throw error if no options passed', function() {
+                var test = function() {
+                    giphy.translate();
+                };
+
+                expect(test).to.throw(Error);
+            });
+
+            it('should throw error if options passed without callback', function() {
+                var test = function() {
+                    giphy.translate({
+                        s: 'superman'
+                    });
+                };
+
+                expect(test).to.throw(Error);
+            });
+        });
+    });
+
     describe('The promise based api', function() {
-        if (typeof Promise === 'undefined') {
+        if (!promisesExist) {
             return;
         }
         describe('Giphy Phrase Search', function() {
@@ -310,7 +376,6 @@ describe('Giphy API', function() {
                     q: 'funny'
                 }).then(function(res) {
                     expect(res.data).to.not.be.empty;
-
                 });
             });
 
@@ -383,7 +448,7 @@ describe('Giphy API', function() {
             });
 
             it('should throw error if Id string empty', function() {
-              return  giphy.id('').catch(function(err) {
+                return giphy.id('').catch(function(err) {
                     expect(err).to.exist;
                 });
             });

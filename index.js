@@ -20,6 +20,25 @@ var PUBLIC_BETA_API_KEY = 'dc6zaTOxFJmzC';
 * Define if the environment is a browser
 */
 var ENV_IS_BROWSER = process.browser || false;
+/**
+* True if promises exist in this engine. Otherwise false.
+*/
+var promisesExist = typeof Promise !== 'undefined';
+
+/**
+* Error handler that supports promises and callbacks
+* @param err {string} - Error message
+* @param callback
+*/
+function _handleErr(err, callback) {
+    if (callback) {
+        return callback(err);
+    } else if (promisesExist) {
+        return Promise.reject(err);
+    } else {
+        throw new Error(err);
+    }
+}
 
 /**
 * @param options {string|object} - Options object. If this is a string, it is
@@ -36,7 +55,7 @@ var GiphyAPI = function(options) {
     } else if (typeof options === 'object') {
         this.apiKey = options.apiKey || PUBLIC_BETA_API_KEY;
     } else {
-        throw new Error ('Invalid options passed to giphy-api');
+        throw new Error('Invalid options passed to giphy-api');
     }
 
     this.timeout = options.timeout || 30000;
@@ -56,11 +75,7 @@ GiphyAPI.prototype = {
     */
     search: function(options, callback) {
         if (!options) {
-            if (callback) {
-                return callback('Search phrase cannot be empty.');
-            } else {
-                return Promise.reject('Search phrase cannot be empty.');
-            }
+            return _handleErr('Search phrase cannot be empty.', callback);
         }
 
         return this._request({
@@ -82,11 +97,7 @@ GiphyAPI.prototype = {
         var idIsArr = Array.isArray(id);
 
         if (!id || (idIsArr && id.length === 0)) {
-            if (callback) {
-                return callback('Id required for id API call');
-            } else {
-                return Promise.reject('Id required for id API call');
-            }
+            return _handleErr('Id required for id API call', callback);
         }
 
         // If an array of Id's was passed, generate a comma delimited string for
@@ -113,11 +124,7 @@ GiphyAPI.prototype = {
     */
     translate: function(options, callback) {
         if (!options) {
-            if (callback) {
-                return callback('Translate phrase cannot be empty.');
-            } else {
-                return new Promise.reject('Translate phrase cannot be empty.');
-            }
+            return _handleErr('Translate phrase cannot be empty.', callback);
         }
 
         return this._request({
@@ -196,6 +203,10 @@ GiphyAPI.prototype = {
     *   we default to the 'q' query string field used by Giphy.
     */
     _request: function(options, callback) {
+        if (!callback && !promisesExist) {
+            throw new Error('Callback must be provided if promises are unavailable');
+        }
+
         var endpoint = '';
         if (options.endpoint) {
             endpoint = '/' + options.endpoint;
@@ -206,18 +217,16 @@ GiphyAPI.prototype = {
         var query;
         var self = this;
 
-        if (typeof(options.query) !== 'undefined') {
-            if (typeof(options.query) === 'object') {
-                if (Object.keys(options.query).length === 0) {
-                    if (callback) {
-                        return callback('Options object should not be empty');
-                    }
-                    return Promise.reject('Options object should not be empty');
+        if (typeof options.query !== 'undefined' && typeof options.query === 'object') {
+            if (Object.keys(options.query).length === 0) {
+                if (callback) {
+                    return callback('Options object should not be empty');
                 }
-
-                options.query.api_key = this.apiKey;
-                query = queryString.stringify(options.query);
+                return Promise.reject('Options object should not be empty');
             }
+
+            options.query.api_key = this.apiKey;
+            query = queryString.stringify(options.query);
         } else {
             query = queryString.stringify({
                 api_key: self.apiKey
@@ -263,7 +272,7 @@ GiphyAPI.prototype = {
             };
             makeRequest(resolve, reject);
         } else {
-            if (typeof Promise === 'undefined') {
+            if (!promisesExist) {
                 throw new Error('Callback must be provided unless Promises are available');
             }
             return new Promise(function(resolve, reject) {
