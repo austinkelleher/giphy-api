@@ -26,6 +26,7 @@
   "homepage": "https://github.com/austinkelleher/giphy-api",
   "devDependencies": {
     "chai": "^3.2.0",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "sinon": "^1.17.3"
   }
 }

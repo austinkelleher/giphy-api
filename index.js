@@ -1,6 +1,7 @@
 /* global process */
 
 var http = require('http');
+var https = require('https');
 var queryString = require('querystring');
 
 /**
@@ -58,6 +59,7 @@ var GiphyAPI = function(options) {
         throw new Error('Invalid options passed to giphy-api');
     }
 
+    this.httpService = options.https ? https : http;
     this.timeout = options.timeout || 30000;
 };
 
@@ -240,7 +242,7 @@ GiphyAPI.prototype = {
         };
 
         var makeRequest = function(resolve, reject) {
-            var req = http.get(requestOptions, function(response) {
+            var req = self.httpService.get(requestOptions, function(response) {
                 var body = '';
                 response.on('data', function(d) {
                     body += d;

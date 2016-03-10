@@ -8,6 +8,10 @@ var chai = require('chai');
 chai.config.includeStack = true;
 require('chai').should();
 var expect = require('chai').expect;
+var sinon = require('sinon');
+var http = require('http');
+var https = require('https');
+var EventEmitter = require('events').EventEmitter;
 
 var promisesExist = typeof Promise !== 'undefined';
 
@@ -690,6 +694,32 @@ describe('Giphy API', function() {
                 expect(err).to.exist;
                 done();
             });
+        });
+    });
+
+    describe('HTTP/HTTPS', function () {
+        beforeEach(function () {
+            sinon.stub(http, 'get').returns(new EventEmitter());
+            sinon.stub(https, 'get').returns(new EventEmitter());
+        });
+
+        afterEach(function () {
+            http.get.restore();
+            https.get.restore();
+        });
+
+        it('defaults to http', function () {
+            var giphy = new Giphy({});
+            giphy.search({ q: 'foo' }, function () {});
+            sinon.assert.calledOnce(http.get);
+            sinon.assert.notCalled(https.get);
+        });
+
+        it('uses https when configured', function () {
+            var giphy = new Giphy({ https: true });
+            giphy.search({ q: 'foo' }, function () {});
+            sinon.assert.notCalled(http.get);
+            sinon.assert.calledOnce(https.get);
         });
     });
 });
