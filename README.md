@@ -30,8 +30,9 @@ var giphy = require('giphy-api')({
 });
 ```
 
-- timeout - Maximum timeout of an API request. Defaults to 30 seconds.
-- apiKey - Giphy API key. Defaults to API beta key
+- https {Boolean} - Whether to utilize HTTPS library for requests or HTTP. Defaults to HTTP.
+- timeout {Number} - Maximum timeout of an API request. Defaults to 30 seconds.
+- apiKey {String} - Giphy API key. Defaults to API beta key
 
 ## [Phrase search](https://github.com/giphy/GiphyAPI#search-endpoint)
 Search all Giphy GIFs for a word or phrase. Supported parameters:
