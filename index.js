@@ -237,7 +237,7 @@ GiphyAPI.prototype = {
         }
 
         var requestOptions = {
-            hostname: API_HOSTNAME,
+            host: API_HOSTNAME,
             path: API_BASE_PATH + options.api + endpoint + query,
             withCredentials: !ENV_IS_BROWSER
         };
