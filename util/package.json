@@ -1,0 +1,5 @@
+{
+    "browser": {
+        "./http.js": "./http_browser.js"
+    }
+}

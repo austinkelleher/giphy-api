@@ -1,8 +1,5 @@
-/* global process */
-
-var http = require('http');
-var https = require('https');
 var queryString = require('querystring');
+var httpService = require('./util/http');
 
 /**
 * Hostname of the Giphy API
@@ -17,10 +14,6 @@ var API_BASE_PATH = '/v1/';
 * if no API key is provided
 */
 var PUBLIC_BETA_API_KEY = 'dc6zaTOxFJmzC';
-/**
-* Define if the environment is a browser
-*/
-var ENV_IS_BROWSER = process.browser || false;
 /**
 * True if promises exist in this engine. Otherwise false.
 */
@@ -60,7 +53,7 @@ var GiphyAPI = function(options) {
         throw new Error('Invalid options passed to giphy-api');
     }
 
-    this.httpService = options.https ? https : http;
+    this.https = options.https;
     this.timeout = options.timeout || 30000;
 };
 
@@ -236,34 +229,18 @@ GiphyAPI.prototype = {
             });
         }
 
-        var requestOptions = {
-            host: API_HOSTNAME,
-            path: API_BASE_PATH + options.api + endpoint + query,
-            withCredentials: !ENV_IS_BROWSER
+        var httpOptions = {
+            request: {
+                host: API_HOSTNAME,
+                path: API_BASE_PATH + options.api + endpoint + query
+            },
+            https: this.https,
+            timeout: this.timeout,
+            fmt: options.query && options.query.fmt
         };
 
         var makeRequest = function(resolve, reject) {
-            var req = self.httpService.get(requestOptions, function(response) {
-                var body = '';
-                response.on('data', function(d) {
-                    body += d;
-                });
-                response.on('end', function() {
-                    if (!options.query || options.query.fmt !== 'html') {
-                        body = JSON.parse(body);
-                    }
-                    resolve(body);
-                });
-            }).on('error', function(err) {
-                reject(err);
-            });
-
-            req.on('socket', function (socket) {
-                socket.setTimeout(self.timeout);
-                socket.on('timeout', function() {
-                    req.abort();
-                });
-            });
+            httpService.get(httpOptions, resolve, reject);
         };
 
         if (callback) {
