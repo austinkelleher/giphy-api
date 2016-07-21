@@ -7,8 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "prepublish": "npm run-script build",
-    "install": "npm run-script build",
+    "prepublish": "npm run build",
     "test": "mocha --ui bdd --reporter spec ./test",
     "build": "./node_modules/browserify/bin/cmd.js index.js | ./node_modules/uglify-js/bin/uglifyjs > bundle.js"
   },
