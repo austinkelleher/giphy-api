@@ -13,6 +13,14 @@ found on the [Giphy API documentation](https://github.com/giphy/GiphyAPI).
 ```bash
 npm install giphy-api --save
 ```
+A JavaScript browser bundle, `bundle.js`, is created following the `npm install`.
+
+# Browser build
+A Javascript browser bundle, `bundle.js`, can be built on demand using:
+
+```bash
+npm run-script build
+```
 
 ## Requiring
 ```javascript
