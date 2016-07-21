@@ -9,7 +9,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "test": "mocha --ui bdd --reporter spec ./test",
-    "build": "./node_modules/browserify/bin/cmd.js index.js | ./node_modules/uglify-js/bin/uglifyjs > bundle.js"
+    "build": "./node_modules/browserify/bin/cmd.js index.js > dist/bundle.js && ./node_modules/browserify/bin/cmd.js index.js | ./node_modules/uglify-js/bin/uglifyjs > dist/bundle.min.js"
   },
   "repository": {
     "type": "git",
