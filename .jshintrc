@@ -1,12 +1,15 @@
 {
     "browser": false,
-    "esnext": true,
+    "esnext": false,
     "globals": {
         "__filename": true,
         "__dirname": true,
         "require": true,
         "module": true,
-        "exports": true
+        "exports": true,
+        "setTimeout": true,
+        "clearTimeout": true,
+        "Promise": true
     },
     "strict": false,
     "globalstrict": true,

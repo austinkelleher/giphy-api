@@ -21,7 +21,7 @@ var promisesExist = typeof Promise !== 'undefined';
 
 /**
 * Error handler that supports promises and callbacks
-* @param err {string} - Error message
+* @param err {String} - Error message
 * @param callback
 */
 function _handleErr(err, callback) {
@@ -35,8 +35,7 @@ function _handleErr(err, callback) {
 }
 
 /**
-* @param options {string|object} - Options object. If this is a string, it is
-*   considered the api key
+* @param options {String|Object} - Options object. If this is a string, it is considered the api key
 *   options.https {Boolean} - Whether to utilize HTTPS library for requests or HTTP. Defaults to HTTP.
 *   options.timeout {Number} - Request timeout before returning an error. Defaults to 30000 milliseconds
 *   options.apiKey {String} - Giphy API key. Defaults to the public beta API key
@@ -62,11 +61,11 @@ GiphyAPI.prototype = {
     * Search all Giphy gifs by word or phrase
     *
     * @param options Giphy API search options
-    *   q - search query term or phrase
-    *   limit - (optional) number of results to return, maximum 100. Default 25.
-    *   offset - (optional) results offset, defaults to 0.
-    *   rating - limit results to those rated (y,g, pg, pg-13 or r).
-    *   fmt - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
+    *   options.q {String} - search query term or phrase
+    *   options.limit {Number} - (optional) number of results to return, maximum 100. Default 25.
+    *   options.offset {Number} - (optional) results offset, defaults to 0.
+    *   options.rating {String}- limit results to those rated (y,g, pg, pg-13 or r).
+    *   options.fmt {String} - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
     * @param callback
     */
     search: function(options, callback) {
@@ -86,7 +85,7 @@ GiphyAPI.prototype = {
     /**
     * Search all Giphy gifs for a single Id or an array of Id's
     *
-    * @param id Single Giphy gif string Id or array of string Id's
+    * @param id {String} - Single Giphy gif string Id or array of string Id's
     * @param callback
     */
     id: function(id, callback) {
@@ -114,9 +113,9 @@ GiphyAPI.prototype = {
     * Search for Giphy gifs by phrase with Gify vocabulary
     *
     * @param options Giphy API translate options
-    *   s - term or phrase to translate into a GIF
-    *   rating - limit results to those rated (y,g, pg, pg-13 or r).
-    *   fmt - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
+    *   options.s {String} - term or phrase to translate into a GIF
+    *   options.rating {String} - limit results to those rated (y,g, pg, pg-13 or r).
+    *   options.fmt {String} - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
     */
     translate: function(options, callback) {
         if (!options) {
@@ -136,9 +135,9 @@ GiphyAPI.prototype = {
     * Fetch random gif filtered by tag
     *
     * @param options Giphy API random options
-    *   tag - the GIF tag to limit randomness by
-    *   rating - limit results to those rated (y,g, pg, pg-13 or r).
-    *   fmt - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
+    *   options.tag {String} - the GIF tag to limit randomness by
+    *   options.rating {String} - limit results to those rated (y,g, pg, pg-13 or r).
+    *   options.fmt {Stirng} - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
     */
     random: function(options, callback) {
         var reqOptions = {
@@ -163,9 +162,9 @@ GiphyAPI.prototype = {
     * Fetch trending gifs
     *
     * @param options Giphy API random options
-    *   limit (optional) limits the number of results returned. By default returns 25 results.
-    *   rating - limit results to those rated (y,g, pg, pg-13 or r).
-    *   fmt - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
+    *   options.limit {Number} - (optional) limits the number of results returned. By default returns 25 results.
+    *   options.rating {String} - limit results to those rated (y,g, pg, pg-13 or r).
+    *   options.fmt {String} - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
     */
     trending: function(options, callback) {
         var reqOptions = {
@@ -193,10 +192,10 @@ GiphyAPI.prototype = {
     * Prepares the HTTP request and query string for the Giphy API
     *
     * @param options
-    *   - endpoint {{string}} The API endpoint e.g. search
-    *   - query {{string/object}} Query string parameters. If these are left
-    *   out then we default to an empty string. If this is passed as a string,
-    *   we default to the 'q' query string field used by Giphy.
+    *   options.endpoint {String} - The API endpoint e.g. search
+    *   options.query {String|Object} Query string parameters. If these are left
+    *       out then we default to an empty string. If this is passed as a string,
+    *       we default to the 'q' query string field used by Giphy.
     */
     _request: function(options, callback) {
         if (!callback && !promisesExist) {

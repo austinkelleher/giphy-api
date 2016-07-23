@@ -1,14 +1,20 @@
-const http = require('http');
-const https = require('https');
+var http = require('http');
+var https = require('https');
 
+/**
+* Non-browser based GET request
+* @param options {Object}
+*   options.request {Object} - Request data including host and path
+*   options.https {Boolean} - Whether to utilize HTTPS library for requests or HTTP. Defaults to HTTP.
+*   options.timeout {Number} - Request timeout before returning an error. Defaults to 30000 milliseconds
+*   options.fmt {String} - Return results in html or json format (useful for viewing responses as GIFs to debug/test)
+*/
 exports.get = function(options, resolve, reject) {
     var httpService = options.https ? https : http;
     var request = options.request;
     var timeout = options.timeout;
     var fmt = options.fmt;
 
-    // The environment is not the browser, so we
-    // set withCredentials to false
     request.withCredentials = false;
 
     var req = httpService.get(request, function(response) {
