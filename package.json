@@ -9,7 +9,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "test": "mocha --ui bdd --reporter spec ./test",
-    "build": "./node_modules/browserify/bin/cmd.js index.js --standalone GiphyAPI > dist/giphy-api.bundle.js && ./node_modules/uglify-js/bin/uglifyjs dist/bundle.js --compress --output dist/giphy-api.bundle.min.js"
+    "build": "./node_modules/browserify/bin/cmd.js index.js --standalone GiphyAPI > dist/giphy-api.bundle.js && ./node_modules/uglify-js/bin/uglifyjs dist/giphy-api.bundle.js --compress --output dist/giphy-api.bundle.min.js"
   },
   "repository": {
     "type": "git",
