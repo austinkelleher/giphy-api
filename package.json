@@ -1,7 +1,7 @@
 {
   "name": "giphy-api",
   "version": "1.2.0",
-  "description": "Node.js Giphy API that supports promises and callbacks",
+  "description": "JavaScript module for the giphy.com API that supports promises and callbacks.",
   "main": "index.js",
   "directories": {
     "test": "test"

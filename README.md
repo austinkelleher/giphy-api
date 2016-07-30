@@ -3,7 +3,7 @@ giphy-api
 [![Build Status](https://travis-ci.org/austinkelleher/giphy-api.svg)](https://travis-ci.org/austinkelleher/giphy-api)
 ![NPM version](https://badge.fury.io/js/giphy-api.svg)
 
-Simple to use Node.js module for the [giphy.com](http://giphy.com) API that
+JavaScript module for the [giphy.com](http://giphy.com) API that
 supports **promises and callbacks**. All search parameters and endpoints can be
 found on the [Giphy API documentation](https://github.com/giphy/GiphyAPI).
 
@@ -11,10 +11,10 @@ found on the [Giphy API documentation](https://github.com/giphy/GiphyAPI).
 ```bash
 npm install giphy-api --save
 ```
-A JavaScript browser bundle, `bundle.js`, is created following the `npm install`.
 
 # Browser build
-A Javascript browser bundle, `bundle.js`, can be built on demand using:
+JavaScript browser bundles are built to `dist/giphy-api.bundle.js` and
+`dist/giphy-api.bundle.min.js` using:
 
 ```bash
 npm run build
