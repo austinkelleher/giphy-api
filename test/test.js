@@ -684,17 +684,6 @@ describe('Giphy API', function() {
         done();
       });
     });
-
-    it('should receive error if socket timeout', function(done) {
-      var giphy = new Giphy({
-        timeout: 1
-      });
-
-      giphy.id('feqkVgjJpYtjy', function(err, res) {
-        expect(err).to.exist;
-        done();
-      });
-    });
   });
 
   describe('HTTP/HTTPS', function() {
