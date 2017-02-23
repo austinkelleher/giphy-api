@@ -9,7 +9,7 @@ var https = require('https');
  *   options.timeout {Number} - Request timeout before returning an error. Defaults to 30000 milliseconds
  *   options.fmt {String} - Return results in html or json format (useful for viewing responses as GIFs to debug/test)
  */
-exports.get = function(options, resolve, reject) {
+exports.get = function (options, resolve, reject) {
   var httpService = options.https ? https : http;
   var request = options.request;
   var timeout = options.timeout;
@@ -17,12 +17,12 @@ exports.get = function(options, resolve, reject) {
 
   request.withCredentials = false;
 
-  var req = httpService.get(request, function(response) {
+  var req = httpService.get(request, function (response) {
     var body = '';
-    response.on('data', function(d) {
+    response.on('data', function (d) {
       body += d;
     });
-    response.on('end', function() {
+    response.on('end', function () {
       if (fmt !== 'html') {
         body = JSON.parse(body);
       }
@@ -30,13 +30,13 @@ exports.get = function(options, resolve, reject) {
     });
   });
 
-  req.on('error', function(err) {
+  req.on('error', function (err) {
     reject(err);
   });
 
-  req.on('socket', function(socket) {
+  req.on('socket', function (socket) {
     socket.setTimeout(timeout);
-    socket.on('timeout', function() {
+    socket.on('timeout', function () {
       req.abort();
     });
   });

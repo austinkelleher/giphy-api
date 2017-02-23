@@ -8,19 +8,19 @@
  *   options.timeout {Number} - Request timeout before returning an error. Defaults to 30000 milliseconds
  *   options.fmt {String} - Return results in html or json format (useful for viewing responses as GIFs to debug/test)
  */
-exports.get = function(options, resolve, reject) {
+exports.get = function (options, resolve, reject) {
   var request = options.request;
   var timeout = options.timeout;
   var fmt = options.fmt;
 
-  var timerId = setTimeout(function() {
+  var timerId = setTimeout(function () {
     reject(new Error('Timeout while fetching asset'));
   }, timeout);
 
   var xhr = new XMLHttpRequest();
   xhr.withCredentials = false;
 
-  var onFail = function(err) {
+  var onFail = function (err) {
     clearTimeout(timerId);
     err = err || new Error('Giphy API request failed!');
     reject(err);
@@ -28,7 +28,7 @@ exports.get = function(options, resolve, reject) {
 
   xhr.addEventListener('error', onFail);
   xhr.addEventListener('abort', onFail);
-  xhr.addEventListener('load', function() {
+  xhr.addEventListener('load', function () {
     clearTimeout(timerId);
     var body = xhr.response;
 

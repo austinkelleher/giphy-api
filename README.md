@@ -50,12 +50,12 @@ Search all Giphy GIFs for a word or phrase. Supported parameters:
 
 ```javascript
 // Search with a plain string using callback
-giphy.search('pokemon', function(err, res) {
+giphy.search('pokemon', function (err, res) {
     // Res contains gif data!
 });
 
 // Search with options using promise
-giphy.search('pokemon').then(function(res) {
+giphy.search('pokemon').then(function (res) {
     // Res contains gif data!
 });
 ```
@@ -64,7 +64,7 @@ giphy.search('pokemon').then(function(res) {
 giphy.search({
     q: 'pokemon',
     rating: 'g'
-}, function(err, res) {
+}, function (err, res) {
     // Res contains gif data!
 });
 ```
@@ -74,12 +74,12 @@ Search all Giphy gifs for a single Id or an array of Id's
 
 ```javascript
 //Search with a single Id using callback
-giphy.id('feqkVgjJpYtjy', function(err, res) {
+giphy.id('feqkVgjJpYtjy', function (err, res) {
 
 });
 
 //Search with a single Id using promise
-giphy.id('feqkVgjJpYtjy').then(function(res) {
+giphy.id('feqkVgjJpYtjy').then(function (res) {
 
 });
 ```
@@ -88,7 +88,7 @@ giphy.id('feqkVgjJpYtjy').then(function(res) {
 giphy.id([
     'feqkVgjJpYtjy',
     '7rzbxdu0ZEXLy'
-], function(err, res) {
+], function (err, res) {
 
 });
 ```
@@ -101,12 +101,12 @@ Experimental search endpoint for gif dialects. Supported parameters:
 
 ```javascript
 // Translate search with a plain string using callback
-giphy.translate('superman', function(err, res) {
+giphy.translate('superman', function (err, res) {
 
 });
 
 // Translate search with a plain string using promise
-giphy.translate('superman').then(function(res) {
+giphy.translate('superman').then(function (res) {
 
 });
 ```
@@ -116,7 +116,7 @@ giphy.translate({
     s: 'superman',
     rating: 'g',
     fmt: 'html'
-}, function(err, res) {
+}, function (err, res) {
 
 });
 ```
@@ -129,12 +129,12 @@ Random gif(s) filtered by tag. Supported parameters:
 
 ```javascript
 // Random gif by tag using callback
-giphy.random('superman', function(err, res) {
+giphy.random('superman', function (err, res) {
 
 });
 
 // Random gif by tag using promise
-giphy.random('superman').then(function(res) {
+giphy.random('superman').then(function (res) {
 
 });
 ```
@@ -144,7 +144,7 @@ giphy.random({
     tag: 'superman',
     rating: 'g',
     fmt: 'json'
-}, function(err, res) {
+}, function (err, res) {
 
 });
 ```
@@ -157,12 +157,12 @@ Trending gifs on [The Hot 100](http://giphy.com/hot100) list
 
 ```javascript
 // Trending Hot 100 gifs using callback
-giphy.trending(function(err, res) {
+giphy.trending(function (err, res) {
 
 });
 
 // Trending Hot 100 gifs using promise
-giphy.trending().then(function(res) {
+giphy.trending().then(function (res) {
 
 });
 ```
@@ -172,7 +172,7 @@ giphy.trending({
     limit: 2,
     rating: 'g',
     fmt: 'json'
-}, function(err, res) {
+}, function (err, res) {
 
 });
 ```
@@ -187,7 +187,7 @@ property to a giphy-api function.
 giphy.search({
     api: 'stickers',
     q: 'funny'
-}, function(err, res) {
+}, function (err, res) {
 
 });
 

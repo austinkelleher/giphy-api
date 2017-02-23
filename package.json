@@ -1,39 +1,41 @@
 {
-    "name": "giphy-api",
-    "description": "JavaScript module for the giphy.com API that supports promises and callbacks.",
-    "main": "index.js",
-    "directories": {
-        "test": "test"
-    },
-    "scripts": {
-        "prepublish": "npm run build",
-        "test": "mocha --ui bdd --reporter spec ./test",
-        "build": "./node_modules/browserify/bin/cmd.js index.js --standalone GiphyAPI > dist/giphy-api.bundle.js && ./node_modules/uglify-js/bin/uglifyjs dist/giphy-api.bundle.js --compress --output dist/giphy-api.bundle.min.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/austinkelleher/giphy-api"
-    },
-    "keywords": [
-        "giphy",
-        "gif",
-        "api"
-    ],
-    "author": "Austin Kelleher, a@alk.im",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/austinkelleher/giphy-api/issues"
-    },
-    "browser": {
-        "./util/http.js": "./util/http_browser.js"
-    },
-    "homepage": "https://github.com/austinkelleher/giphy-api",
-    "devDependencies": {
-        "browserify": "^13.0.1",
-        "chai": "^3.2.0",
-        "mocha": "^2.2.5",
-        "sinon": "^1.17.3",
-        "uglify-js": "^2.7.0"
-    },
-    "version": "1.2.3"
+  "name": "giphy-api",
+  "description": "JavaScript module for the giphy.com API that supports promises and callbacks.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "prepublish": "npm run build",
+    "test": "mocha --ui bdd --reporter spec ./test",
+    "build": "./node_modules/browserify/bin/cmd.js index.js --standalone GiphyAPI > dist/giphy-api.bundle.js && ./node_modules/uglify-js/bin/uglifyjs dist/giphy-api.bundle.js --compress --output dist/giphy-api.bundle.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/austinkelleher/giphy-api"
+  },
+  "keywords": [
+    "giphy",
+    "gif",
+    "api"
+  ],
+  "author": "Austin Kelleher, a@alk.im",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/austinkelleher/giphy-api/issues"
+  },
+  "browser": {
+    "./util/http.js": "./util/http_browser.js"
+  },
+  "homepage": "https://github.com/austinkelleher/giphy-api",
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "chai": "^3.2.0",
+    "eslint-config-semistandard": "^7.0.0",
+    "mocha": "^2.2.5",
+    "sinon": "^1.17.3",
+    "standard": "^8.6.0",
+    "uglify-js": "^2.7.0"
+  },
+  "version": "1.2.3"
 }
