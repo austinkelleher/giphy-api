@@ -25,7 +25,7 @@ var promisesExist = typeof Promise !== 'undefined';
 * @param err {String} - Error message
 * @param callback
 */
-function _handleErr(err, callback) {
+function _handleErr (err, callback) {
   if (callback) {
     return callback(err);
   } else if (promisesExist) {
@@ -41,7 +41,7 @@ function _handleErr(err, callback) {
 *   options.timeout {Number} - Request timeout before returning an error. Defaults to 30000 milliseconds
 *   options.apiKey {String} - Giphy API key. Defaults to the public beta API key
 */
-var GiphyAPI = function(options) {
+var GiphyAPI = function (options) {
   if (typeof options === 'string' ||
     typeof options === 'undefined' ||
     options === null) {
@@ -69,7 +69,7 @@ GiphyAPI.prototype = {
   *   options.fmt {String} - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
   * @param callback
   */
-  search: function(options, callback) {
+  search: function (options, callback) {
     if (!options) {
       return _handleErr('Search phrase cannot be empty.', callback);
     }
@@ -77,7 +77,7 @@ GiphyAPI.prototype = {
     return this._request({
       api: options.api || 'gifs',
       endpoint: 'search',
-      query: typeof(options) === 'string' ? {
+      query: typeof options === 'string' ? {
         q: options
       } : options
     }, callback);
@@ -89,7 +89,7 @@ GiphyAPI.prototype = {
   * @param id {String} - Single Giphy gif string Id or array of string Id's
   * @param callback
   */
-  id: function(id, callback) {
+  id: function (id, callback) {
     var idIsArr = Array.isArray(id);
 
     if (!id || (idIsArr && id.length === 0)) {
@@ -118,7 +118,7 @@ GiphyAPI.prototype = {
   *   options.rating {String} - limit results to those rated (y,g, pg, pg-13 or r).
   *   options.fmt {String} - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
   */
-  translate: function(options, callback) {
+  translate: function (options, callback) {
     if (!options) {
       return _handleErr('Translate phrase cannot be empty.', callback);
     }
@@ -126,7 +126,7 @@ GiphyAPI.prototype = {
     return this._request({
       api: options.api || 'gifs',
       endpoint: 'translate',
-      query: typeof(options) === 'string' ? {
+      query: typeof options === 'string' ? {
         s: options
       } : options
     }, callback);
@@ -140,19 +140,19 @@ GiphyAPI.prototype = {
   *   options.rating {String} - limit results to those rated (y,g, pg, pg-13 or r).
   *   options.fmt {Stirng} - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
   */
-  random: function(options, callback) {
+  random: function (options, callback) {
     var reqOptions = {
       api: (options ? options.api : null) || 'gifs',
       endpoint: 'random'
     };
 
-    if (typeof(options) === 'string') {
+    if (typeof options === 'string') {
       reqOptions.query = {
         tag: options
       };
-    } else if (typeof(options) === 'object') {
+    } else if (typeof options === 'object') {
       reqOptions.query = options;
-    } else if (typeof(options) === 'function') {
+    } else if (typeof options === 'function') {
       callback = options;
     }
 
@@ -167,14 +167,14 @@ GiphyAPI.prototype = {
   *   options.rating {String} - limit results to those rated (y,g, pg, pg-13 or r).
   *   options.fmt {String} - (optional) return results in html or json format (useful for viewing responses as GIFs to debug/test)
   */
-  trending: function(options, callback) {
+  trending: function (options, callback) {
     var reqOptions = {
       endpoint: 'trending'
     };
 
     reqOptions.api = (options ? options.api : null) || 'gifs';
 
-    //Cleanup so we don't add this to our query
+    // Cleanup so we don't add this to our query
     if (options) {
       delete options.api;
     }
@@ -198,7 +198,7 @@ GiphyAPI.prototype = {
   *       out then we default to an empty string. If this is passed as a string,
   *       we default to the 'q' query string field used by Giphy.
   */
-  _request: function(options, callback) {
+  _request: function (options, callback) {
     if (!callback && !promisesExist) {
       throw new Error('Callback must be provided if promises are unavailable');
     }
@@ -239,15 +239,15 @@ GiphyAPI.prototype = {
       fmt: options.query && options.query.fmt
     };
 
-    var makeRequest = function(resolve, reject) {
+    var makeRequest = function (resolve, reject) {
       httpService.get(httpOptions, resolve, reject);
     };
 
     if (callback) {
-      var resolve = function(res) {
+      var resolve = function (res) {
         callback(null, res);
       };
-      var reject = function(err) {
+      var reject = function (err) {
         callback(err);
       };
       makeRequest(resolve, reject);
@@ -255,14 +255,14 @@ GiphyAPI.prototype = {
       if (!promisesExist) {
         throw new Error('Callback must be provided unless Promises are available');
       }
-      return new Promise(function(resolve, reject) {
+      return new Promise(function (resolve, reject) {
         makeRequest(resolve, reject);
       });
     }
   }
 };
 
-module.exports = function(apiKey, options) {
+module.exports = function (apiKey, options) {
   return new GiphyAPI(apiKey, options);
 };
 
@@ -456,19 +456,19 @@ exports.encode = exports.stringify = require('./encode');
  *   options.timeout {Number} - Request timeout before returning an error. Defaults to 30000 milliseconds
  *   options.fmt {String} - Return results in html or json format (useful for viewing responses as GIFs to debug/test)
  */
-exports.get = function(options, resolve, reject) {
+exports.get = function (options, resolve, reject) {
   var request = options.request;
   var timeout = options.timeout;
   var fmt = options.fmt;
 
-  var timerId = setTimeout(function() {
+  var timerId = setTimeout(function () {
     reject(new Error('Timeout while fetching asset'));
   }, timeout);
 
   var xhr = new XMLHttpRequest();
   xhr.withCredentials = false;
 
-  var onFail = function(err) {
+  var onFail = function (err) {
     clearTimeout(timerId);
     err = err || new Error('Giphy API request failed!');
     reject(err);
@@ -476,7 +476,7 @@ exports.get = function(options, resolve, reject) {
 
   xhr.addEventListener('error', onFail);
   xhr.addEventListener('abort', onFail);
-  xhr.addEventListener('load', function() {
+  xhr.addEventListener('load', function () {
     clearTimeout(timerId);
     var body = xhr.response;
 
