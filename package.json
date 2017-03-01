@@ -32,7 +32,7 @@
     "browserify": "^13.0.1",
     "chai": "^3.2.0",
     "eslint-config-semistandard": "^7.0.0",
-    "mocha": "^2.2.5",
+    "mocha": "^3.2.0",
     "sinon": "^1.17.3",
     "standard": "^8.6.0",
     "uglify-js": "^2.7.0"
