@@ -37,5 +37,5 @@
     "standard": "^8.6.0",
     "uglify-js": "^2.7.0"
   },
-  "version": "1.2.3"
+  "version": "1.2.4"
 }
