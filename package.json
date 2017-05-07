@@ -35,7 +35,7 @@
     "mocha": "^3.2.0",
     "sinon": "^2.0.0",
     "standard": "^10.0.0",
-    "uglify-js": "^2.7.0"
+    "uglify-js": "^3.0.0"
   },
   "version": "1.2.5"
 }
