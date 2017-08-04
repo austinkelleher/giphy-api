@@ -5,7 +5,7 @@ giphy-api
 
 JavaScript module for the [giphy.com](http://giphy.com) API that
 supports **promises and callbacks**. All search parameters and endpoints can be
-found on the [Giphy API documentation](https://github.com/giphy/GiphyAPI).
+found on the [Giphy API documentation](https://developers.giphy.com/docs/).
 
 ## Installation
 ```bash
@@ -40,7 +40,7 @@ var giphy = require('giphy-api')({
 - timeout {Number} - Maximum timeout of an API request. Defaults to 30 seconds.
 - apiKey {String} - Giphy API key. Defaults to API beta key
 
-## [Phrase search](https://github.com/giphy/GiphyAPI#search-endpoint)
+## [Phrase search](https://developers.giphy.com/docs/#operation--gifs-search-get)
 Search all Giphy GIFs for a word or phrase. Supported parameters:
 - q - search query term or phrase
 - limit - (optional) number of results to return, maximum 100. Default 25.
@@ -69,7 +69,7 @@ giphy.search({
 });
 ```
 
-## [Giphy Id search](https://github.com/giphy/GiphyAPI#get-gif-by-id-endpoint)
+## [Giphy Id search](https://developers.giphy.com/docs/#path--gifs)
 Search all Giphy gifs for a single Id or an array of Id's
 
 ```javascript
@@ -93,7 +93,7 @@ giphy.id([
 });
 ```
 
-## [Translate search](https://github.com/giphy/GiphyAPI#translate-endpoint)
+## [Translate search](https://developers.giphy.com/docs/#path--gifs-translate)
 Experimental search endpoint for gif dialects. Supported parameters:
 - s - term or phrase to translate into a GIF
 - rating - limit results to those rated (y,g, pg, pg-13 or r).
@@ -121,7 +121,7 @@ giphy.translate({
 });
 ```
 
-## [Random](https://github.com/giphy/GiphyAPI#random-endpoint)
+## [Random](https://developers.giphy.com/docs/#path--gifs-random)
 Random gif(s) filtered by tag. Supported parameters:
 - tag - the GIF tag to limit randomness by
 - rating - limit results to those rated (y,g, pg, pg-13 or r).
@@ -149,7 +149,7 @@ giphy.random({
 });
 ```
 
-## [Trending](https://github.com/giphy/GiphyAPI#trending-gifs-endpoint)
+## [Trending](https://developers.giphy.com/docs/#path--gifs-trending)
 Trending gifs on [The Hot 100](http://giphy.com/hot100) list
 - limit (optional) limits the number of results returned. By default returns 25 results.
 - rating - limit results to those rated (y,g, pg, pg-13 or r).
@@ -177,7 +177,7 @@ giphy.trending({
 });
 ```
 
-## [Stickers](https://github.com/giphy/GiphyAPI#giphy-sticker-api)
+## [Stickers](https://developers.giphy.com/docs/#giphy-sticker-api)
 [Animated stickers](https://giphy.com/stickers) are gifs with transparent backgrounds. All giphy-api functions
 support stickers **except id**, which is not a supported Giphy sticker endpoint.
 In order to use the sticker API instead of the gif API, simply pass the ```api```
