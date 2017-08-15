@@ -1,4 +1,4 @@
-var queryString = require('querystring');
+var queryStringify = require('./util/queryStringify');
 var httpService = require('./util/http');
 
 /**
@@ -207,23 +207,21 @@ GiphyAPI.prototype = {
       endpoint = '/' + options.endpoint;
     }
 
-    endpoint += '?';
-
     var query;
     var self = this;
 
     if (typeof options.query !== 'undefined' && typeof options.query === 'object') {
       if (Object.keys(options.query).length === 0) {
         if (callback) {
-          return callback('Options object should not be empty');
+          return callback(new Error('Options object should not be empty'));
         }
-        return Promise.reject('Options object should not be empty');
+        return Promise.reject(new Error('Options object should not be empty'));
       }
 
       options.query.api_key = this.apiKey;
-      query = queryString.stringify(options.query);
+      query = queryStringify(options.query);
     } else {
-      query = queryString.stringify({
+      query = queryStringify({
         api_key: self.apiKey
       });
     }
