@@ -226,10 +226,11 @@ GiphyAPI.prototype = {
       });
     }
 
-		var proxy = options.query.proxy,
-		
+		var proxy = options.query.proxy;
+		var request;
+
 		if (proxy) {
-			var request = {
+			request = {
         host: proxy,
         path: (options.query.https ? "https" : "http") + "://" + API_HOSTNAME + API_BASE_PATH + options.api + endpoint + query,
 				headers: {
@@ -237,7 +238,7 @@ GiphyAPI.prototype = {
 				}
       }
 		} else {
-			var request = {
+			request = {
         host: API_HOSTNAME,
         path: API_BASE_PATH + options.api + endpoint + query
       }
