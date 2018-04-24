@@ -232,7 +232,7 @@ GiphyAPI.prototype = {
 		if (proxy) {
 			request = {
         host: proxy,
-        path: (this.https ? "https" : "http" )+ "://" + API_HOSTNAME + API_BASE_PATH + options.api + endpoint + query,
+        path: (options.query.https ? "https" : "http") + "://" + API_HOSTNAME + API_BASE_PATH + options.api + endpoint + query,
 				headers: {
 					Host: API_HOSTNAME
 				}
