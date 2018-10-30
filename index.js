@@ -54,6 +54,7 @@ var GiphyAPI = function (options) {
 
   this.https = options.https;
   this.timeout = options.timeout || 30000;
+  this.httpService = httpService.create(this.https);
 };
 
 GiphyAPI.prototype = {
@@ -227,11 +228,11 @@ GiphyAPI.prototype = {
     }
 
     var httpOptions = {
+      httpService: this.httpService,
       request: {
         host: API_HOSTNAME,
         path: API_BASE_PATH + options.api + endpoint + query
       },
-      https: this.https,
       timeout: this.timeout,
       fmt: options.query && options.query.fmt
     };

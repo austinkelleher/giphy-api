@@ -674,6 +674,16 @@ describe('Giphy API', function () {
         done();
       });
     });
+
+    it('should initialize with httpService as http by default', function () {
+      var giphy = new Giphy();
+      expect(giphy.httpService.globalAgent.protocol).to.equal('http:');
+    });
+
+    it('should initialize with httpService as https when enabled', function () {
+      var giphy = new Giphy({ https: true });
+      expect(giphy.httpService.globalAgent.protocol).to.equal('https:');
+    });
   });
 
   describe('HTTP/HTTPS', function () {
