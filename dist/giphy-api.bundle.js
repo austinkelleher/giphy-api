@@ -235,7 +235,8 @@ GiphyAPI.prototype = {
         path: API_BASE_PATH + options.api + endpoint + query
       },
       timeout: this.timeout,
-      fmt: options.query && options.query.fmt
+      fmt: options.query && options.query.fmt,
+      https: this.https
     };
 
     var makeRequest = function (resolve, reject) {
@@ -267,6 +268,10 @@ module.exports = function (apiKey, options) {
 
 },{"./util/http":2,"./util/queryStringify":3}],2:[function(require,module,exports){
 /* globals XMLHttpRequest */
+
+exports.create = function () {
+  return this;
+};
 
 /**
  * Browser based GET request
