@@ -1,5 +1,9 @@
 /* globals XMLHttpRequest */
 
+exports.create = function () {
+  return this;
+};
+
 /**
  * Browser based GET request
  * @param options {Object}
