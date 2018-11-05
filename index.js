@@ -234,7 +234,8 @@ GiphyAPI.prototype = {
         path: API_BASE_PATH + options.api + endpoint + query
       },
       timeout: this.timeout,
-      fmt: options.query && options.query.fmt
+      fmt: options.query && options.query.fmt,
+      https: this.https
     };
 
     var makeRequest = function (resolve, reject) {
