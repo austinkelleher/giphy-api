@@ -28,7 +28,13 @@ exports.get = function (options, resolve, reject) {
     });
     response.on('end', function () {
       if (fmt !== 'html') {
-        body = JSON.parse(body);
+        try {
+          body = JSON.parse(body);
+        } catch (e) {
+          reject(e);
+          return;
+        }
+        
       }
       resolve(body);
     });
